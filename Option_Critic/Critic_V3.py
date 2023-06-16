@@ -3,13 +3,13 @@ from collections import defaultdict
 
 
 class Critic:
-    def __init__(self, nb_states, nb_actions, nb_opt, lr, gamma):
+    def __init__(self, nb_states, nb_actions, nb_opt, lr, gamma, higher_lvl):
         self.nb_states = nb_states
         self.nb_actions = nb_actions
         self.nb_opt = nb_opt
         self.lr = lr
         self.gamma = gamma
-        self.higher_lvl = defaultdict()
+        self.higher_lvl = higher_lvl
         self.Q_U = defaultdict()
     
 

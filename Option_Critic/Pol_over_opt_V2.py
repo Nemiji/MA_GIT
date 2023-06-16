@@ -23,4 +23,5 @@ class Higherlvl:
             return np.argmax(self.table[state])
 
     def update_table(self, r, s, sp, opt):
+        self.choose_opt(sp,opt)
         self.table[s][opt] += self.lr*(r+self.gamma*np.max(self.table[sp])-self.choose_opt[s][opt])
