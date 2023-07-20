@@ -3,34 +3,21 @@ from collections import defaultdict
 from scipy.special import expit, logsumexp, softmax
 
 
-class IntraPol_LOC:
-    def __init__(self, nb_states, lr, temp,  ep):
+class IntraPol:
+    def __init__(self, nb_states, nb_actions, lr, temp):
         self.nb_states = nb_states
+        self.nb_actions = nb_actions
         self.lr = lr
         self.table = defaultdict()
-        self.max_nodes = ep.maximum_node_count
-        self.max_local = ep.local_attacks_count
-        self.loc_table = self.init_loc_table()
         self.temp = temp
-
-
-
-    def init_loc_table(self):
-        self.loc_table = []
-        for i in range(self.max_nodes):
-            for j in range(self.max_local):
-                self.loc_table.append((i,j))
-
 
 
     def choose_action(self, s, a=None):
         if s not in self.table:
-            self.table[s] = np.zeros(len(self.loc_table))
+            self.table[s] = np.zeros(self.nb_actions)
         if a!= None:
             return self.table[s][a]
-        a = np.random.choice(len(self.loc_table), p=softmax(self.table[s]/self.temp))
-        return self.loc_table[a]
-    
+        return np.random.choice(self.nb_actions, p=softmax(self.table[s]/self.temp))
     
     def get_intra_val(self, s, a):
         return softmax(self.choose_action(s,a)/self.temp)

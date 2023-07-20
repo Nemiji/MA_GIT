@@ -26,6 +26,7 @@ class TermFunc:
 
     # Update formula needs to be controlled again
     def update(self, s, A):
+        self.check_term(s,True)
         self.table[s] -= self.lr*(expit(self.table[s])*(1-expit(self.table[s])))*A
 
     
